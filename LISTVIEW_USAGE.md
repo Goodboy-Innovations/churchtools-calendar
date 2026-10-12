@@ -4,6 +4,8 @@
 
 The ListView feature displays ChurchTools calendar events in a chronological list format, perfect for upcoming events displays, TV screens, and information boards.
 
+The list view is available in the WordPress plugin. The HubSpot module shows the calendar view only.
+
 ## Basic Usage
 
 ### WordPress Shortcode

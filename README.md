@@ -199,10 +199,11 @@ To add a platform, add a folder under `platforms/`, a script in `scripts/platfor
 
 ### API Requirements
 
-The plugin requires:
+On both platforms the calendar requires:
 - ChurchTools instance with API access
-- Valid calendar ID
+- Valid calendar ID, visible to anonymous users
 - Accessible `/api/calendars/{calendarId}/appointments` endpoint
+- CORS on the ChurchTools side that allows requests from the site's domain, since events are fetched in the visitor's browser
 
 ### Calendar Grid Features
 
@@ -216,7 +217,7 @@ The plugin requires:
 
 Events show:
 - Time or "All Day" indicator
-- Event title (bold, lime green)
+- Event title (bold, in the ChurchTools calendar's color)
 - Expandable details on click
 - Description
 - Location (if available)
@@ -263,10 +264,9 @@ UI texts and date locales live in `src/i18n.ts`. To add a language, add an entry
 
 ### Calendar not displaying
 
-1. Check that the plugin is activated
-2. Verify the API base URL in settings
-3. Check browser console for errors
-4. Ensure the calendar ID exists in ChurchTools
+1. WordPress: check that the plugin is activated and the API base URL is set in Settings → ChurchTools Calendar. HubSpot: check the module's **ChurchTools-osoite** and **Kalenterin ID** fields
+2. Check browser console for errors
+3. Ensure the calendar ID exists in ChurchTools
 
 ### API errors
 
