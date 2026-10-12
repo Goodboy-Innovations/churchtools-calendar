@@ -7,7 +7,7 @@ Displays ChurchTools calendar events with a responsive interface built with Reac
 | WordPress plugin | `platforms/wordpress/` | `churchtools-calendar-wordpress-<version>.zip` |
 | HubSpot CMS module | `platforms/hubspot/` | `churchtools-calendar-hubspot-<version>.zip`, and the module folder in git |
 
-Each platform has its own version in `versions.json` and is released separately. Releases are on the [GitHub Releases](https://github.com/Goodboy-Innovations/churchtools-wp-calendar/releases) page.
+Each platform has its own version in `versions.json` and is released separately. Releases are on the [GitHub Releases](https://github.com/Goodboy-Innovations/churchtools-calendar/releases) page.
 
 ## Tech Stack
 
@@ -168,7 +168,7 @@ The `Release` workflow then builds the zip and publishes it as a GitHub Release.
 ### Project Structure
 
 ```
-churchtools-wp-calendar/
+churchtools-calendar/
 ├── src/                          # Shared calendar (React + TypeScript)
 │   ├── components/
 │   ├── hooks/
