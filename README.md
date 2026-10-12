@@ -123,6 +123,7 @@ The same calendar runs on HubSpot as a custom module in `platforms/hubspot/churc
    - **Kalenterin ID**: a public calendar
    - **Kieli**: automatic (page language), Finnish or English
    - **CSS-luokka** (optional): an extra class on the calendar container, for styling only this calendar (see [Styling](#styling))
+   - **Oma CSS** (optional): CSS added to the page with the calendar, e.g. to override the theme colors (see [Styling](#styling)). HubSpot's Styles tab only accepts style field types, so this is on the Content tab
 
 The calendar is fetched in the visitor's browser, so the ChurchTools API must allow requests from the site's domain (CORS) and the calendar must be visible to anonymous users.
 
@@ -248,7 +249,7 @@ Colors and fonts are CSS custom properties, so a site can theme the calendar wit
 
 The HubSpot module ships with a default theme, `platforms/hubspot/theme.css` (navy text, teal highlights, warm gray borders, the site's own font), bundled into `module.css`. The WordPress plugin uses the defaults above.
 
-To change the look on one site, override the variables in the site's own stylesheet (on HubSpot, e.g. Settings → Content → Pages → Site header HTML). This selector wins over both the defaults and the HubSpot theme regardless of load order:
+To change the look on one site, override the variables in the site's own stylesheet, or on HubSpot in the module's **Oma CSS** field. This selector wins over both the defaults and the HubSpot theme regardless of load order:
 
 ```css
 .churchtools-calendar-container .churchtools-calendar {

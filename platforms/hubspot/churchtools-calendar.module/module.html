@@ -2,6 +2,11 @@
 {% set ct_container_id = "churchtools-calendar-" ~ name|md5 %}
 {% set ct_language = module.language if module.language != "auto" else "" %}
 
+{% if module.extra_css %}
+{# "</" is escaped so the CSS cannot close the style tag #}
+<style>{{ module.extra_css|replace("</", "<\/") }}</style>
+{% endif %}
+
 {% if not module.base_url %}
 <div class="churchtools-calendar-error">Lisää ChurchTools-osoite moduulin asetuksiin.</div>
 {% else %}

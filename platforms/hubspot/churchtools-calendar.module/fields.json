@@ -44,5 +44,13 @@
     "type": "text",
     "required": false,
     "default": ""
+  },
+  {
+    "name": "extra_css",
+    "label": "Oma CSS",
+    "help_text": "CSS, joka lisätään sivulle kalenterin kanssa. Värit: .churchtools-calendar-container .churchtools-calendar { --ct-accent: #c0392b; }. Vain tämä kalenteri: kirjoita CSS-luokka ja käytä sitä, esim. .oma-luokka .churchtools-calendar { ... }",
+    "type": "text",
+    "required": false,
+    "default": ""
   }
 ]
