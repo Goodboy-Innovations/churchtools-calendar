@@ -1,10 +1,10 @@
 # Dependencies
 node_modules/
-package-lock.json
 yarn.lock
 
-# Build output
+# Build output (HubSpot module.js / module.css are committed on purpose)
 dist/
+release/
 *.tsbuildinfo
 
 # Environment

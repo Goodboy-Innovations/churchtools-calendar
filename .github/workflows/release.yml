@@ -1,0 +1,45 @@
+name: Release
+
+# Tags come from `npm run release:wordpress` / `npm run release:hubspot`
+on:
+  push:
+    tags:
+      - 'wordpress-v*'
+      - 'hubspot-v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # tags, for release notes since this platform's previous release
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Read platform and version from tag
+        id: tag
+        run: |
+          platform="${GITHUB_REF_NAME%%-v*}"
+          version="${GITHUB_REF_NAME#*-v}"
+          expected="$(node -p "require('./versions.json')['$platform']")"
+          if [ "$version" != "$expected" ]; then
+            echo "::error::Tag says $version but versions.json says $expected for $platform."
+            exit 1
+          fi
+          echo "platform=$platform" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - run: npm ci
+      - run: npm run build:${{ steps.tag.outputs.platform }}
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          previous="$(git tag --list '${{ steps.tag.outputs.platform }}-v*' --sort=-v:refname | sed -n 2p)"
+          gh release create "$GITHUB_REF_NAME" release/*.zip \
+            --title "${{ steps.tag.outputs.platform }} ${{ steps.tag.outputs.version }}" \
+            --generate-notes ${previous:+--notes-start-tag "$previous"}
