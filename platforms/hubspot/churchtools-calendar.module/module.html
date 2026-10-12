@@ -3,7 +3,7 @@
 {% set ct_language = module.language if module.language != "auto" else "" %}
 
 <div id="{{ ct_container_id }}"
-     class="churchtools-calendar-container{% if module.lahden_vapis_theme %} ct-theme-lahden-vapis{% endif %}"></div>
+     class="churchtools-calendar-container{% if module.css_class %} {{ module.css_class|escape_attr }}{% endif %}"></div>
 
 <script>
   (function () {

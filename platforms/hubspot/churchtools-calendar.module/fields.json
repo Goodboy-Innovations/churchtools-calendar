@@ -38,9 +38,11 @@
     "default": "auto"
   },
   {
-    "name": "lahden_vapis_theme",
-    "label": "Lahden vapaaseurakunnan tyyli",
-    "type": "boolean",
-    "default": true
+    "name": "css_class",
+    "label": "CSS-luokka",
+    "help_text": "Lisäluokka kalenterin ympärille, esim. sivuston oman kalenteriteeman kohdistamiseen.",
+    "type": "text",
+    "required": false,
+    "default": ""
   }
 ]

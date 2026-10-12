@@ -112,7 +112,7 @@ The same calendar runs on HubSpot as a custom module in `platforms/hubspot/churc
 
 1. Get the module. Either:
    - download `churchtools-calendar-hubspot-<version>.zip` from the latest `hubspot-v*` release, or
-   - use `platforms/hubspot/churchtools-calendar.module` straight from git. The built `module.js` (the calendar bundle) and `module.css` (styles + themes from `platforms/hubspot/themes/`) are committed, and their first line shows the module version.
+   - use `platforms/hubspot/churchtools-calendar.module` straight from git. The built `module.js` (the calendar bundle) and `module.css` (its styles) are committed, and their first line shows the module version.
 2. Upload the module to your HubSpot theme with the [HubSpot CLI](https://developers.hubspot.com/docs/cms/developer-reference/local-development-cli):
    ```bash
    hs upload platforms/hubspot/churchtools-calendar.module <your-theme>/modules/churchtools-calendar.module
@@ -122,7 +122,7 @@ The same calendar runs on HubSpot as a custom module in `platforms/hubspot/churc
    - **ChurchTools-osoite**: your instance, e.g. `https://your-church.church.tools`
    - **Kalenterin ID**: a public calendar
    - **Kieli**: automatic (page language), Finnish or English
-   - **Lahden vapaaseurakunnan tyyli**: applies `platforms/hubspot/themes/lahden-vapaaseurakunta.css`
+   - **CSS-luokka** (optional): an extra class on the calendar container, for scoping a site theme (see [Styling](#styling))
 
 The calendar is fetched in the visitor's browser, so the ChurchTools API must allow requests from the site's domain (CORS) and the calendar must be visible to anonymous users.
 
@@ -146,7 +146,7 @@ npm run dev
 | `npm run build:hubspot` | `release/churchtools-calendar-hubspot-<version>.zip`, and updates the committed `module.js` / `module.css` |
 | `npm run build:all` | Both |
 
-After changing `src/` or a HubSpot theme, run `npm run build:hubspot` and commit the module files. CI fails if they are out of date.
+After changing `src/` or the HubSpot module, run `npm run build:hubspot` and commit the module files. CI fails if they are out of date.
 
 ### Releasing
 
@@ -181,8 +181,7 @@ churchtools-wp-calendar/
 │   │   ├── churchtools-calendar.php  # Main plugin file, shortcode
 │   │   └── admin/settings.php        # Admin settings page
 │   └── hubspot/
-│       ├── churchtools-calendar.module/  # HubSpot module (module.js / module.css generated)
-│       └── themes/                       # Site themes bundled into module.css
+│       └── churchtools-calendar.module/  # HubSpot module (module.js / module.css generated)
 ├── scripts/
 │   ├── package.mjs               # Package a platform from dist/
 │   ├── release.mjs               # Bump version, build, commit, tag
@@ -245,7 +244,16 @@ Colors and fonts are CSS custom properties, so a site can theme the calendar wit
 }
 ```
 
-See `platforms/hubspot/themes/lahden-vapaaseurakunta.css` for a full theme. Spacing, sizing and breakpoints are in `src/styles/calendar.scss`.
+Put a site's theme in the site's own stylesheet, not in this repo. To keep it from affecting other calendars, or to win over the module's own styles, scope it to a class and enter that class in the HubSpot module's **CSS-luokka** field (on WordPress, wrap the shortcode in an element with the class):
+
+```css
+.ct-theme-my-site .churchtools-calendar {
+    --ct-font: "Site Font", sans-serif;
+    --ct-accent: #2563eb;
+}
+```
+
+Spacing, sizing and breakpoints are in `src/styles/calendar.scss`.
 
 ### Date Format
 

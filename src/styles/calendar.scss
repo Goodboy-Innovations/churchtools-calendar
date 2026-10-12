@@ -5,7 +5,7 @@
 
 // Variables
 // Colors and fonts are CSS custom properties (--ct-*) so a site can theme the
-// calendar without rebuilding, e.g. hubspot/themes/lahden-vapaaseurakunta.css
+// calendar from its own stylesheet without rebuilding (see README, Styling)
 $shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 $mobile-breakpoint: 850px;
 
