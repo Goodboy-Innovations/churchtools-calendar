@@ -44,11 +44,11 @@ $base_url = get_option('churchtools_calendar_base_url', '');
                                 name="churchtools_calendar_base_url" 
                                 value="<?php echo esc_attr($base_url); ?>" 
                                 class="regular-text"
-                                placeholder="https://your-church.church.tools/api"
+                                placeholder="https://your-church.church.tools"
                                 required
                             />
                             <p class="description">
-                                <?php _e('Enter the base URL of your ChurchTools instance (e.g., https://your-church.church.tools/api)', 'churchtools-calendar'); ?>
+                                <?php _e('Enter the base URL of your ChurchTools instance (e.g., https://your-church.church.tools)', 'churchtools-calendar'); ?>
                             </p>
                         </td>
                     </tr>

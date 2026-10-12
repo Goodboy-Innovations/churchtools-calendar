@@ -37,6 +37,7 @@ export function build(version) {
     [`${dir}/dist/churchtools-calendar.iife.js`]: js,
     [`${dir}/dist/churchtools-calendar.css`]: css,
     [`${dir}/README.md`]: { from: resolve(root, 'README.md') },
+    [`${dir}/docs/GUIDE.md`]: { from: resolve(root, 'docs/GUIDE.md') },
     [`${dir}/LICENSE`]: { from: resolve(root, 'LICENSE') },
   });
 }
