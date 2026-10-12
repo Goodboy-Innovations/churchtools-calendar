@@ -15,13 +15,19 @@
 
 <script>
   (function () {
+    // Language: the module setting, or the page language (<html lang>) when automatic
+    var language = {{ ct_language|tojson }} || document.documentElement.lang.slice(0, 2).toLowerCase();
+    // A language can have its own calendar; otherwise the default calendar is used
+    var calendars = { en: {{ module.calendar_id_en|tojson }} };
+    var calendarId = calendars[language] || {{ module.calendar_id|tojson }};
+
     function start() {
       window.ChurchToolsCalendar.init(
         {{ ct_container_id|tojson }},
         {{ module.base_url|tojson }},
-        {{ module.calendar_id|tojson }},
+        calendarId,
         "calendar",
-        {{ ct_language|tojson }}
+        language
       );
     }
     // module.js is loaded in the page footer, so wait for it

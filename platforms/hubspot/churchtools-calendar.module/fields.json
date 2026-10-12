@@ -10,10 +10,18 @@
   {
     "name": "calendar_id",
     "label": "Kalenterin ID",
-    "help_text": "Julkisen ChurchTools-kalenterin ID.",
+    "help_text": "Julkisen ChurchTools-kalenterin ID. Näytetään kaikilla sivuilla, joille ei ole alla omaa kalenteria.",
     "type": "text",
     "required": true,
     "default": "1"
+  },
+  {
+    "name": "calendar_id_en",
+    "label": "Kalenterin ID, englanninkieliset sivut",
+    "help_text": "Valinnainen. Englanninkielisillä sivuilla näytetään tämä kalenteri. Tyhjä: käytetään yllä olevaa kalenteria.",
+    "type": "text",
+    "required": false,
+    "default": ""
   },
   {
     "name": "language",

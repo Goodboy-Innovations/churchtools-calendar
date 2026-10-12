@@ -131,11 +131,14 @@ The module is now in **Design Manager** under `churchtools`.
    |---|---|
    | **ChurchTools-osoite** | Your ChurchTools address, e.g. `https://your-church.church.tools` |
    | **Kalenterin ID** | Your calendar ID |
+   | **Kalenterin ID, englanninkieliset sivut** | Optional. A separate calendar for English pages, e.g. one with events written in English. Leave empty to show the same calendar on every page |
    | **Kieli** | Language: *Automaattinen* (page language), *Suomi* or *English* |
    | **CSS-luokka** | Optional. See [Change the look](#3-change-the-look) |
    | **Oma CSS** | Optional. See [Change the look](#3-change-the-look) |
 
 3. Publish the page.
+
+**One calendar per language:** with **Kieli** set to *Automaattinen*, the module shows the English calendar on English pages and the main calendar on all other pages. You can then use the same module settings on both language versions of a page.
 
 The HubSpot module shows the month calendar. The list view is only available on WordPress.
 
