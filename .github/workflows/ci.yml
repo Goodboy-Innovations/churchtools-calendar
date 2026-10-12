@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:all
+      - name: Committed HubSpot module is up to date
+        run: |
+          if ! git diff --exit-code -- platforms/hubspot; then
+            echo "::error::platforms/hubspot module.js / module.css are out of date. Run 'npm run build:hubspot' and commit them."
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: release/*.zip

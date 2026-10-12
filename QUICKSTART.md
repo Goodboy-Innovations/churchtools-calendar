@@ -2,30 +2,27 @@
 
 ## Installation
 
-1. **Install dependencies**:
+1. **Build the plugin zip**:
    ```bash
    npm install
+   npm run build:wordpress
    ```
+   This writes `release/churchtools-calendar-wordpress-<version>.zip`. Or download the zip from the latest `wordpress-v*` GitHub Release.
 
-2. **Build the plugin**:
-   ```bash
-   npm run build
-   ```
+2. **Install in WordPress**:
+   Go to Plugins → Add New → Upload Plugin and upload the zip.
 
-3. **Copy to WordPress**:
-   Copy the entire `churchtools-wp-calendar` folder to your WordPress `wp-content/plugins/` directory.
-
-4. **Activate the plugin**:
+3. **Activate the plugin**:
    - Go to WordPress Admin → Plugins
    - Find "ChurchTools Calendar"
    - Click "Activate"
 
-5. **Configure settings**:
+4. **Configure settings**:
    - Go to Settings → ChurchTools Calendar
    - Enter your ChurchTools API base URL (e.g., `https://your-church.church.tools/api`)
    - Save settings
 
-6. **Use the shortcode**:
+5. **Use the shortcode**:
    Add this to any page or post:
    ```
    [churchtools_calendar id="1"]
@@ -58,9 +55,9 @@ npm run build
 ```
 
 ### After making changes:
-Always rebuild before testing in WordPress:
+Rebuild and reinstall the zip before testing in WordPress:
 ```bash
-npm run build
+npm run build:wordpress
 ```
 
 ## Files Generated
@@ -68,6 +65,8 @@ npm run build
 After building, you'll find in `dist/`:
 - `churchtools-calendar.iife.js` - Main JavaScript bundle
 - `churchtools-calendar.css` - Compiled styles
+
+The platform builds package these into `release/`. See "Building" and "Releasing" in the README.
 
 ## Troubleshooting
 

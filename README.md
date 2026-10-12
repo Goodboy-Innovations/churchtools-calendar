@@ -1,6 +1,13 @@
-# ChurchTools WordPress Calendar Plugin
+# ChurchTools Calendar
 
-A modern WordPress plugin for displaying ChurchTools calendar events with a beautiful, responsive interface built with React, TypeScript, and Vite.
+Displays ChurchTools calendar events with a responsive interface built with React, TypeScript and Vite. One shared calendar is released for two platforms:
+
+| Platform | Folder | Release |
+|---|---|---|
+| WordPress plugin | `platforms/wordpress/` | `churchtools-calendar-wordpress-<version>.zip` |
+| HubSpot CMS module | `platforms/hubspot/` | `churchtools-calendar-hubspot-<version>.zip`, and the module folder in git |
+
+Each platform has its own version in `versions.json` and is released separately. Releases are on the [GitHub Releases](https://github.com/Goodboy-Innovations/churchtools-wp-calendar/releases) page.
 
 ## Tech Stack
 
@@ -8,40 +15,27 @@ A modern WordPress plugin for displaying ChurchTools calendar events with a beau
 - **Build Tool**: Vite
 - **Styling**: SCSS with mobile-first approach
 - **Date Handling**: date-fns
-- **Backend**: WordPress PHP
+- **Platforms**: WordPress (PHP), HubSpot CMS (HubL module)
 
-## Installation
+## WordPress
 
-### Prerequisites
+### Requirements
 
-- Node.js (v18 or higher)
-- npm or yarn
 - WordPress 5.0+
 - ChurchTools account with API access
 
-### Setup
+### Installation
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Build the project**:
-   ```bash
-   npm run build
-   ```
-
-4. **Activate the plugin** in WordPress admin panel:
-   - Go to Plugins → Installed Plugins
-   - Find "ChurchTools Calendar"
-   - Click "Activate"
-
-5. **Configure the plugin**:
+1. **Download** `churchtools-calendar-wordpress-<version>.zip` from the latest `wordpress-v*` release.
+2. **Upload** it in WordPress: Plugins → Add New → Upload Plugin, then activate **ChurchTools Calendar**.
+3. **Configure the plugin**:
    - Go to Settings → ChurchTools Calendar
    - Enter your ChurchTools API base URL (e.g., `https://your-church.church.tools/api`)
    - Click "Save Settings"
 
-## Usage
+To build the zip yourself, run `npm install` and `npm run build:wordpress`. The zip is written to `release/`.
+
+## WordPress Usage
 
 ### Shortcode
 
@@ -114,22 +108,21 @@ You can display multiple calendars on the same site by using different calendar 
 
 ## HubSpot CMS
 
-The same calendar runs on HubSpot as a custom module in `hubspot/churchtools-calendar.module`. The module shows the calendar view only.
+The same calendar runs on HubSpot as a custom module in `platforms/hubspot/churchtools-calendar.module`. The module shows the calendar view only.
 
-1. The built module files `module.js` (the calendar bundle) and `module.css` (styles + themes from `hubspot/themes/`) are committed, so the module folder can be used straight from git. After changing the source or a theme, rebuild and commit them:
-   ```bash
-   npm run build:hubspot
-   ```
+1. Get the module. Either:
+   - download `churchtools-calendar-hubspot-<version>.zip` from the latest `hubspot-v*` release, or
+   - use `platforms/hubspot/churchtools-calendar.module` straight from git. The built `module.js` (the calendar bundle) and `module.css` (styles + themes from `platforms/hubspot/themes/`) are committed, and their first line shows the module version.
 2. Upload the module to your HubSpot theme with the [HubSpot CLI](https://developers.hubspot.com/docs/cms/developer-reference/local-development-cli):
    ```bash
-   hs upload hubspot/churchtools-calendar.module <your-theme>/modules/churchtools-calendar.module
+   hs upload platforms/hubspot/churchtools-calendar.module <your-theme>/modules/churchtools-calendar.module
    ```
    Or create a module in Design Manager and paste in `module.html`, `module.css`, `module.js` and the fields from `fields.json`.
 3. Add the **ChurchTools-kalenteri** module to a page and fill in:
    - **ChurchTools-osoite**: your instance, e.g. `https://your-church.church.tools`
    - **Kalenterin ID**: a public calendar
    - **Kieli**: automatic (page language), Finnish or English
-   - **Lahden vapaaseurakunnan tyyli**: applies `hubspot/themes/lahden-vapaaseurakunta.css`
+   - **Lahden vapaaseurakunnan tyyli**: applies `platforms/hubspot/themes/lahden-vapaaseurakunta.css`
 
 The calendar is fetched in the visitor's browser, so the ChurchTools API must allow requests from the site's domain (CORS) and the calendar must be visible to anonymous users.
 
@@ -143,48 +136,65 @@ Run the development server with hot module replacement:
 npm run dev
 ```
 
-### Build for Production
+### Building
 
-Create an optimized production build:
+`npm run build` builds the shared calendar bundle into `dist/`. The platform scripts build it and then package one platform into `release/`:
+
+| Command | Output |
+|---|---|
+| `npm run build:wordpress` | `release/churchtools-calendar-wordpress-<version>.zip` |
+| `npm run build:hubspot` | `release/churchtools-calendar-hubspot-<version>.zip`, and updates the committed `module.js` / `module.css` |
+| `npm run build:all` | Both |
+
+After changing `src/` or a HubSpot theme, run `npm run build:hubspot` and commit the module files. CI fails if they are out of date.
+
+### Releasing
+
+Release each platform on its own:
 
 ```bash
-npm run build
+npm run release:wordpress -- patch
+npm run release:hubspot -- minor
 ```
+
+The argument is `patch`, `minor`, `major` or an exact version like `2.0.0`. The script needs a clean working tree. It bumps the version in `versions.json` (and the WordPress plugin header), builds the platform, commits, and tags `wordpress-v<version>` or `hubspot-v<version>`. Push the tag to publish:
+
+```bash
+git push origin HEAD wordpress-v1.2.0
+```
+
+The `Release` workflow then builds the zip and publishes it as a GitHub Release.
 
 ### Project Structure
 
 ```
 churchtools-wp-calendar/
-├── src/
-│   ├── components/          # React components
-│   │   ├── CalendarGrid.tsx
-│   │   ├── EventList.tsx
-│   │   ├── EventItem.tsx
-│   │   └── MonthNavigation.tsx
-│   ├── hooks/               # Custom React hooks
-│   │   ├── useCalendarState.ts
-│   │   ├── useEvents.ts
-│   │   └── useResponsive.ts
-│   ├── services/            # API services
-│   │   └── api.service.ts
-│   ├── types/               # TypeScript definitions
-│   │   ├── api.types.ts
-│   │   └── calendar.types.ts
-│   ├── utils/               # Utility functions
-│   │   └── date.utils.ts
-│   ├── styles/              # SCSS styles
-│   │   └── calendar.scss
-│   ├── App.tsx              # Main app component
-│   └── main.tsx             # Entry point
-├── admin/
-│   └── settings.php         # WordPress admin settings
-├── dist/                    # Compiled assets (generated)
-├── churchtools-calendar.php # Main plugin file
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
-└── README.md
+├── src/                          # Shared calendar (React + TypeScript)
+│   ├── components/
+│   ├── hooks/
+│   ├── services/api.service.ts   # ChurchTools API
+│   ├── styles/calendar.scss
+│   ├── i18n.ts                   # FI / EN texts
+│   └── main.tsx                  # window.ChurchToolsCalendar.init()
+├── platforms/
+│   ├── wordpress/
+│   │   ├── churchtools-calendar.php  # Main plugin file, shortcode
+│   │   └── admin/settings.php        # Admin settings page
+│   └── hubspot/
+│       ├── churchtools-calendar.module/  # HubSpot module (module.js / module.css generated)
+│       └── themes/                       # Site themes bundled into module.css
+├── scripts/
+│   ├── package.mjs               # Package a platform from dist/
+│   ├── release.mjs               # Bump version, build, commit, tag
+│   └── platforms/                # One file per platform
+├── .github/workflows/            # CI and Release
+├── versions.json                 # Release version of each platform
+├── dist/                         # Shared bundle (generated)
+└── release/                      # Release zips (generated)
 ```
+
+To add a platform, add a folder under `platforms/`, a script in `scripts/platforms/` and register it in `scripts/platforms/index.mjs`. Every platform loads the same bundle and calls `window.ChurchToolsCalendar.init(containerId, baseUrl, calendarId, view, language)`.
+
 
 ## Configuration
 
@@ -235,7 +245,7 @@ Colors and fonts are CSS custom properties, so a site can theme the calendar wit
 }
 ```
 
-See `hubspot/themes/lahden-vapaaseurakunta.css` for a full theme. Spacing, sizing and breakpoints are in `src/styles/calendar.scss`.
+See `platforms/hubspot/themes/lahden-vapaaseurakunta.css` for a full theme. Spacing, sizing and breakpoints are in `src/styles/calendar.scss`.
 
 ### Date Format
 
