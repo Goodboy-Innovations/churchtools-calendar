@@ -93,6 +93,16 @@ yoursite.com/events/?scale=1.5&disable=description,location
 yoursite.com/events/?days=14
 ```
 
+### Language
+
+The UI is available in Finnish (`fi`, default) and English (`en`):
+
+```
+[churchtools_calendar id="1" lang="en"]
+```
+
+Without `lang`, the page language (`<html lang="...">`) is used.
+
 ### Multiple Calendars
 
 You can display multiple calendars on the same site by using different calendar IDs:
@@ -101,6 +111,27 @@ You can display multiple calendars on the same site by using different calendar 
 [churchtools_calendar id="1"]
 [churchtools_calendar id="2"]
 ```
+
+## HubSpot CMS
+
+The same calendar runs on HubSpot as a custom module in `hubspot/churchtools-calendar.module`. The module shows the calendar view only.
+
+1. The built module files `module.js` (the calendar bundle) and `module.css` (styles + themes from `hubspot/themes/`) are committed, so the module folder can be used straight from git. After changing the source or a theme, rebuild and commit them:
+   ```bash
+   npm run build:hubspot
+   ```
+2. Upload the module to your HubSpot theme with the [HubSpot CLI](https://developers.hubspot.com/docs/cms/developer-reference/local-development-cli):
+   ```bash
+   hs upload hubspot/churchtools-calendar.module <your-theme>/modules/churchtools-calendar.module
+   ```
+   Or create a module in Design Manager and paste in `module.html`, `module.css`, `module.js` and the fields from `fields.json`.
+3. Add the **ChurchTools-kalenteri** module to a page and fill in:
+   - **ChurchTools-osoite**: your instance, e.g. `https://your-church.church.tools`
+   - **Kalenterin ID**: a public calendar
+   - **Kieli**: automatic (page language), Finnish or English
+   - **Lahden vapaaseurakunnan tyyli**: applies `hubspot/themes/lahden-vapaaseurakunta.css`
+
+The calendar is fetched in the visitor's browser, so the ChurchTools API must allow requests from the site's domain (CORS) and the calendar must be visible to anonymous users.
 
 ## Development
 
@@ -186,18 +217,29 @@ Events show:
 
 ### Styling
 
-Edit `src/styles/calendar.scss` to customize:
-- Colors (primary accent is `#b4d336`)
-- Font families
-- Spacing and sizing
-- Responsive breakpoints
+Colors and fonts are CSS custom properties, so a site can theme the calendar without rebuilding:
+
+```css
+.churchtools-calendar {
+    --ct-font: "Your Font", sans-serif;
+    --ct-text: #2c3e50;
+    --ct-text-muted: #5d6465;
+    --ct-heading: var(--ct-text);
+    --ct-accent: #b4d336;
+    --ct-today: var(--ct-accent);
+    --ct-selected-bg: var(--ct-accent);
+    --ct-selected-text: #ffffff;
+    --ct-indicator: var(--ct-text-muted);
+    --ct-border: #e9ecef;
+    --ct-bg-hover: #f8f9fa;
+}
+```
+
+See `hubspot/themes/lahden-vapaaseurakunta.css` for a full theme. Spacing, sizing and breakpoints are in `src/styles/calendar.scss`.
 
 ### Date Format
 
-The plugin uses Finnish locale by default. To change:
-1. Edit `src/utils/date.utils.ts`
-2. Import different locale from `date-fns/locale`
-3. Update format functions
+UI texts and date locales live in `src/i18n.ts`. To add a language, add an entry with its texts and a `date-fns/locale` locale.
 
 ## Troubleshooting
 

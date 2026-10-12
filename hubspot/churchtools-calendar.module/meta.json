@@ -1,0 +1,13 @@
+{
+  "label": "ChurchTools-kalenteri",
+  "help_text": "Näyttää ChurchTools-kalenterin tapahtumat kalenteri- tai listanäkymänä.",
+  "host_template_types": ["PAGE", "BLOG_POST", "BLOG_LISTING"],
+  "global": false,
+  "is_available_for_new_content": true,
+  "css_assets": [],
+  "js_assets": [],
+  "external_js": [],
+  "other_assets": [],
+  "smart_type": "NOT_SMART",
+  "tags": []
+}

@@ -5,6 +5,7 @@
 import React from 'react';
 import { formatTime, formatDate, isMultiDayEvent } from '../utils/date.utils';
 import { Appointment } from '../types/api.types';
+import { useI18n } from '../i18n';
 
 interface EventItemProps {
     eventData: Appointment;
@@ -13,14 +14,15 @@ interface EventItemProps {
 }
 
 export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setExpanded }) => {
+    const t = useI18n();
     const event = eventData.base;
     const startTime = formatTime(eventData.calculated.startDate);
     const endTime = formatTime(eventData.calculated.endDate);
     const startDate = formatDate(eventData.calculated.startDate);
     const endDate = formatDate(eventData.calculated.endDate);
     const isMultiDay = isMultiDayEvent(eventData.calculated.startDate, eventData.calculated.endDate);
-    const title = event.title || 'Tapahtuma';
-    const color = event.calendar.color || '#b4d336';
+    const title = event.title || t.event;
+    const color = event.calendar.color || 'var(--ct-accent)';
 
     const toggleExpanded = () => {
         setExpanded(event.id);
@@ -29,9 +31,9 @@ export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setEx
     const renderTimeDisplay = () => {
         if (event.allDay) {
             if (isMultiDay) {
-                return `Koko päivä: ${startDate} - ${endDate}`;
+                return `${t.allDay}: ${startDate} - ${endDate}`;
             }
-            return 'Koko päivä';
+            return t.allDay;
         }
         
         if (isMultiDay) {
@@ -40,7 +42,6 @@ export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setEx
         
         return `${startTime} - ${endTime}`;
     };
-    console.log(event);
     return (
         <div className="event-item" onClick={toggleExpanded} role="button" tabIndex={0}>
             {event.image && (
@@ -119,7 +120,7 @@ export const EventItem: React.FC<EventItemProps> = ({ eventData, expanded, setEx
             )}
 
             {!expanded && (event.description || event.address || event.link) && (
-                <p className="event-hint">Napauta tapahtumaa nähdäksesi lisätietoja</p>
+                <p className="event-hint">{t.tapForDetails}</p>
             )}
         </div>
     );

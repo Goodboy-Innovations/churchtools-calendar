@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build --mode production",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:hubspot": "npm run build && node scripts/build-hubspot.mjs"
   },
   "dependencies": {
     "date-fns": "^3.0.0",

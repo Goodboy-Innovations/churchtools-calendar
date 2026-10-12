@@ -1,0 +1,46 @@
+[
+  {
+    "name": "base_url",
+    "label": "ChurchTools-osoite",
+    "help_text": "Instanssin osoite, esim. https://seurakunta.church.tools",
+    "type": "text",
+    "required": true,
+    "default": ""
+  },
+  {
+    "name": "calendar_id",
+    "label": "Kalenterin ID",
+    "help_text": "Julkisen ChurchTools-kalenterin ID.",
+    "type": "text",
+    "required": true,
+    "default": "1"
+  },
+  {
+    "name": "language",
+    "label": "Kieli",
+    "help_text": "Automaattinen käyttää sivun kieltä.",
+    "type": "choice",
+    "display": "select",
+    "choices": [
+      [
+        "auto",
+        "Automaattinen"
+      ],
+      [
+        "fi",
+        "Suomi"
+      ],
+      [
+        "en",
+        "English"
+      ]
+    ],
+    "default": "auto"
+  },
+  {
+    "name": "lahden_vapis_theme",
+    "label": "Lahden vapaaseurakunnan tyyli",
+    "type": "boolean",
+    "default": true
+  }
+]

@@ -5,7 +5,7 @@
 import React from 'react';
 import { getPreviousMonth, getNextMonth } from '../utils/date.utils';
 import { format } from 'date-fns';
-import { fi } from 'date-fns/locale';
+import { useI18n } from '../i18n';
 
 interface MonthNavigationProps {
   currentMonth: Date;
@@ -18,18 +18,19 @@ export const MonthNavigation: React.FC<MonthNavigationProps> = ({
   onPreviousMonth,
   onNextMonth,
 }) => {
+  const t = useI18n();
   const previousMonth = getPreviousMonth(currentMonth);
   const nextMonth = getNextMonth(currentMonth);
 
-  const previousMonthName = format(previousMonth, 'LLLL', { locale: fi });
-  const nextMonthName = format(nextMonth, 'LLLL', { locale: fi });
+  const previousMonthName = format(previousMonth, 'LLLL', { locale: t.locale });
+  const nextMonthName = format(nextMonth, 'LLLL', { locale: t.locale });
 
   return (
     <div className="month-navigation">
       <button
         className="nav-button prev"
         onClick={onPreviousMonth}
-        aria-label={`Edellinen kuukausi: ${previousMonthName}`}
+        aria-label={t.previousMonth(previousMonthName)}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -43,12 +44,12 @@ export const MonthNavigation: React.FC<MonthNavigationProps> = ({
         <span className="month-name">{previousMonthName}</span>
       </button>
 
-      <h2 className="current-month">{format(currentMonth, 'LLLL yyyy', { locale: fi }).toUpperCase()}</h2>
+      <h2 className="current-month">{format(currentMonth, 'LLLL yyyy', { locale: t.locale }).toUpperCase()}</h2>
 
       <button
         className="nav-button next"
         onClick={onNextMonth}
-        aria-label={`Seuraava kuukausi: ${nextMonthName}`}
+        aria-label={t.nextMonth(nextMonthName)}
       >
         <span className="month-name">{nextMonthName}</span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">

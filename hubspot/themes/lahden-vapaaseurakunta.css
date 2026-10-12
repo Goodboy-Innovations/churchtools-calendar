@@ -1,0 +1,60 @@
+/**
+ * Lahden vapaaseurakunta theme for the ChurchTools calendar
+ *
+ * Mirrors lahdenvapaasrk.fi: Artegra Sans (loaded by the site theme),
+ * navy #003F5F text and headings, teal #0090A9 highlights and warm gray
+ * #DFDBD2 borders. Square edges throughout.
+ *
+ * Applied when the calendar sits inside an element with the
+ * .ct-theme-lahden-vapis class (the HubSpot module adds it by default).
+ */
+
+.ct-theme-lahden-vapis .churchtools-calendar {
+    --ct-font: "Artegra Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --ct-text: #003F5F;
+    --ct-text-muted: #8D8D94;
+    --ct-heading: #003F5F;
+    --ct-accent: #0090A9;
+    --ct-today: #0090A9;
+    --ct-selected-bg: #003F5F;
+    --ct-selected-text: #ffffff;
+    --ct-indicator: #0090A9;
+    --ct-border: #DFDBD2;
+    --ct-bg-hover: #fafafa;
+
+    font-size: 1.1rem;
+}
+
+/* Month heading and nav buttons follow the site's bold navy headings */
+.ct-theme-lahden-vapis .churchtools-calendar .month-navigation .current-month {
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.ct-theme-lahden-vapis .churchtools-calendar .month-navigation .nav-button {
+    border-color: #003F5F;
+    color: #003F5F;
+}
+
+.ct-theme-lahden-vapis .churchtools-calendar .month-navigation .nav-button:hover {
+    background: #003F5F;
+    border-color: #003F5F;
+    color: #ffffff;
+}
+
+/* Selected-day badge matches the selected day in the grid */
+.ct-theme-lahden-vapis .churchtools-calendar .event-list .event-list-header .selected-day-badge {
+    background: #003F5F;
+    border-color: #003F5F;
+    color: #ffffff;
+}
+
+/* Links like on the site: teal, underlined */
+.ct-theme-lahden-vapis .churchtools-calendar a {
+    color: #0090A9;
+    text-decoration: underline;
+}
+
+.ct-theme-lahden-vapis .churchtools-calendar a:hover {
+    color: #003F5F;
+}

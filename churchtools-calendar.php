@@ -104,7 +104,8 @@ class ChurchTools_Calendar {
         // Parse shortcode attributes
         $atts = shortcode_atts(array(
             'id' => '1',
-            'view' => 'calendar'
+            'view' => 'calendar',
+            'lang' => ''
         ), $atts, 'churchtools_calendar');
         
         // Get base URL from settings
@@ -130,7 +131,8 @@ class ChurchTools_Calendar {
                         "' . $container_id . '",
                         "' . esc_js($base_url) . '",
                         "' . esc_js($atts['id']) . '",
-                        "' . esc_js($atts['view']) . '"
+                        "' . esc_js($atts['view']) . '",
+                        "' . esc_js($atts['lang']) . '"
                     );
                 }
             });

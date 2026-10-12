@@ -1,28 +1,37 @@
 /**
  * ChurchTools Calendar Styles
- * Scandinavian minimal design with lime green accent
+ * Scandinavian minimal design, square edges, themable via --ct-* custom properties
  */
 
 // Variables
-$primary-color: #b4d336; // Lime green
-$text-primary: #2c3e50;
-$text-secondary: #5d6465;
-$white: #ffffff;
-$light-gray: #f8f9fa;
-$border-color: #e9ecef;
+// Colors and fonts are CSS custom properties (--ct-*) so a site can theme the
+// calendar without rebuilding, e.g. hubspot/themes/lahden-vapaaseurakunta.css
 $shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-$shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
 $mobile-breakpoint: 850px;
 
-// Reset and base styles
-* {
+// Reset and base styles (scoped so the host page is not affected)
+.churchtools-calendar,
+.churchtools-calendar * {
     box-sizing: border-box;
 }
 
 // Main container
 .churchtools-calendar {
+    --ct-font: inherit;
+    --ct-text: #2c3e50;
+    --ct-text-muted: #5d6465;
+    --ct-heading: var(--ct-text);
+    --ct-accent: #b4d336;
+    --ct-today: var(--ct-accent);
+    --ct-selected-bg: var(--ct-accent);
+    --ct-selected-text: #ffffff;
+    --ct-indicator: var(--ct-text-muted);
+    --ct-border: #e9ecef;
+    --ct-bg-hover: #f8f9fa;
+
     -webkit-tap-highlight-color: transparent;
-    color: $text-primary;
+    font-family: var(--ct-font);
+    color: var(--ct-text);
     line-height: 1.6;
     max-width: 1500px;
     margin: 0 auto;
@@ -41,6 +50,7 @@ $mobile-breakpoint: 850px;
     }
 
     .current-month {
+        color: var(--ct-heading);
         font-size: 24px;
         font-weight: 700;
         letter-spacing: 0.5px;
@@ -59,17 +69,17 @@ $mobile-breakpoint: 850px;
         gap: 8px;
         padding: 8px 16px;
         background: transparent;
-        border: 2px solid $border-color;
-        border-radius: 8px;
+        border: 2px solid var(--ct-border);
         cursor: pointer;
         transition: all 0.2s ease;
         font-size: 14px;
-        color: $text-secondary;
+        font-family: inherit;
+        color: var(--ct-text-muted);
 
         &:hover {
-            background: $light-gray;
-            border-color: $primary-color;
-            color: $text-primary;
+            background: var(--ct-bg-hover);
+            border-color: var(--ct-accent);
+            color: var(--ct-text);
         }
 
         &:active {
@@ -114,7 +124,7 @@ $mobile-breakpoint: 850px;
             text-align: center;
             font-size: 12px;
             font-weight: 600;
-            color: $text-secondary;
+            color: var(--ct-text-muted);
             padding: 8px 0;
             letter-spacing: 0.5px;
         }
@@ -135,11 +145,11 @@ $mobile-breakpoint: 850px;
             justify-content: center;
             background: transparent;
             border: none;
-            border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 16px;
-            color: $text-primary;
+            font-family: inherit;
+            color: var(--ct-text);
             padding: 8px;
 
             @media (max-width: $mobile-breakpoint) {
@@ -147,31 +157,31 @@ $mobile-breakpoint: 850px;
             }
 
             &:hover {
-                background: $light-gray;
+                background: var(--ct-bg-hover);
             }
 
             &.other-month {
-                color: $text-secondary;
+                color: var(--ct-text-muted);
                 opacity: 0.5;
             }
 
             &.today {
                 font-weight: 700;
-                color: $primary-color;
+                color: var(--ct-today);
             }
 
             &.selected {
-                background: $primary-color;
-                color: $white;
+                background: var(--ct-selected-bg);
+                color: var(--ct-selected-text);
                 font-weight: 600;
-                box-shadow: 0 2px 8px rgba(180, 211, 54, 0.3);
 
                 &:hover {
-                    background: darken($primary-color, 5%);
+                    background: var(--ct-selected-bg);
+                    filter: brightness(0.95);
                 }
 
                 .event-indicator {
-                    background: $white;
+                    background: var(--ct-selected-text);
                 }
             }
 
@@ -185,8 +195,7 @@ $mobile-breakpoint: 850px;
                 bottom: 6px;
                 width: 4px;
                 height: 4px;
-                border-radius: 50%;
-                background: $text-secondary;
+                background: var(--ct-indicator);
                 transition: background 0.2s ease;
             }
         }
@@ -201,9 +210,10 @@ $mobile-breakpoint: 850px;
         align-items: center;
         margin-bottom: 20px;
         padding-bottom: 16px;
-        border-bottom: 2px solid $border-color;
+        border-bottom: 2px solid var(--ct-border);
 
         .event-list-title {
+        color: var(--ct-heading);
             font-size: 18px;
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -216,8 +226,7 @@ $mobile-breakpoint: 850px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid $text-primary;
-            border-radius: 50%;
+            border: 2px solid var(--ct-text);
             font-weight: 600;
             font-size: 16px;
         }
@@ -241,16 +250,14 @@ $mobile-breakpoint: 850px;
         }
 
         &::-webkit-scrollbar-track {
-            background: $light-gray;
-            border-radius: 3px;
+            background: var(--ct-bg-hover);
         }
 
         &::-webkit-scrollbar-thumb {
-            background: $text-secondary;
-            border-radius: 3px;
+            background: var(--ct-text-muted);
 
             &:hover {
-                background: $text-secondary;
+                background: var(--ct-text-muted);
             }
         }
     }
@@ -258,7 +265,7 @@ $mobile-breakpoint: 850px;
     .no-events {
         text-align: center;
         padding: 40px 20px;
-        color: $text-secondary;
+        color: var(--ct-text-muted);
 
         p {
             margin: 0;
@@ -271,19 +278,16 @@ $mobile-breakpoint: 850px;
 .event-item {
 
     -webkit-tap-highlight-color: transparent;
-    border: 2px solid $border-color;
-    border-radius: 12px;
+    border: 2px solid var(--ct-border);
     cursor: pointer;
     transition: all 0.2s ease;
 
     &:hover {
-        border-color: $primary-color;
+        border-color: var(--ct-accent);
         box-shadow: $shadow;
     }
 
     .event-image {
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
         overflow: hidden;
 
         img {
@@ -317,7 +321,7 @@ $mobile-breakpoint: 850px;
             font-weight: 700;
             margin: 0 0 0 0;
             padding: 0;
-            color: $primary-color;
+            color: var(--ct-accent);
             letter-spacing: 0.3px;
         }
         .event-subtitle {
@@ -325,7 +329,7 @@ $mobile-breakpoint: 850px;
             font-weight: 600;
             margin: 0 0 0 0;
             padding: 0;
-            color: $text-primary;
+            color: var(--ct-text);
             letter-spacing: 0.3px;
         }
     }
@@ -334,7 +338,7 @@ $mobile-breakpoint: 850px;
         padding: 16px;
         padding-top: 0px;
         font-size: 13px;
-        color: $text-secondary;
+        color: var(--ct-text-muted);
         margin: 8px 0 0 0;
         font-style: italic;
     }
@@ -343,14 +347,14 @@ $mobile-breakpoint: 850px;
         padding: 16px;
         margin-top: 16px;
         padding-top: 16px;
-        border-top: 1px solid $border-color;
+        border-top: 1px solid var(--ct-border);
 
         .event-description {
             margin-bottom: 12px;
 
             p {
                 margin: 0;
-                color: $text-primary;
+                color: var(--ct-text);
                 line-height: 1.6;
             }
         }
@@ -360,7 +364,7 @@ $mobile-breakpoint: 850px;
             align-items: flex-start;
             gap: 8px;
             margin-bottom: 12px;
-            color: $text-secondary;
+            color: var(--ct-text-muted);
             font-size: 14px;
 
             .location-icon {
@@ -374,7 +378,7 @@ $mobile-breakpoint: 850px;
                 gap: 4px;
 
                 strong {
-                    color: $text-primary;
+                    color: var(--ct-text);
                     font-weight: 600;
                 }
             }
@@ -389,14 +393,14 @@ $mobile-breakpoint: 850px;
     align-items: center;
     justify-content: center;
     padding: 40px;
-    color: $text-secondary;
+    color: var(--ct-text-muted);
 
     .spinner {
         width: 40px;
         height: 40px;
-        border: 3px solid $border-color;
-        border-top-color: $primary-color;
-        border-radius: 50%;
+        border: 3px solid var(--ct-border);
+        border-top-color: var(--ct-accent);
+        border-radius: 50%; // spinner stays round
         animation: spin 0.8s linear infinite;
         margin-bottom: 16px;
     }
@@ -411,7 +415,6 @@ $mobile-breakpoint: 850px;
     padding: 16px;
     background: #fee;
     border: 1px solid #fcc;
-    border-radius: 8px;
     margin-bottom: 20px;
 
     p {
@@ -454,7 +457,7 @@ $mobile-breakpoint: 850px;
         display: block;
     }
     align-items: flex-start;
-    border-bottom: 1px solid $text-secondary;
+    border-bottom: 1px solid var(--ct-text-muted);
     padding-bottom: 14px;
     padding-top: 10px;
     .listview-day-header {
@@ -464,10 +467,11 @@ $mobile-breakpoint: 850px;
 
       h3 {
         font-size: calc(1.4rem * var(--lv-scale));
+        font-family: var(--ct-font);
         font-weight: 700;
         letter-spacing: 0.5px;
         margin: 0;
-        color: $text-primary;
+        color: var(--ct-text);
       }
     }
 
@@ -485,8 +489,7 @@ $mobile-breakpoint: 850px;
   // List view specific event item styles
   .listview-event-item {
     -webkit-tap-highlight-color: transparent;
-    border: 2px solid $border-color;
-    border-radius: 12px;
+    border: 2px solid var(--ct-border);
     cursor: pointer;
     transition: all 0.2s ease;
     padding: 4px;
@@ -519,7 +522,7 @@ $mobile-breakpoint: 850px;
         font-size: calc(1.1rem * var(--lv-scale));
         font-weight: 600;
         margin: 0;
-        color: $text-primary;
+        color: var(--ct-text);
     }
     p {
       font-size: calc(1rem * var(--lv-scale));
@@ -532,7 +535,7 @@ $mobile-breakpoint: 850px;
       cursor: default;
 
       &:hover {
-        border-color: $border-color;
+        border-color: var(--ct-border);
         box-shadow: none;
       }
     }
@@ -541,7 +544,7 @@ $mobile-breakpoint: 850px;
   .no-events {
     text-align: center;
     padding: 60px 20px;
-    color: $text-secondary;
+    color: var(--ct-text-muted);
 
     p {
       margin: 0;

@@ -40,7 +40,6 @@ export class ChurchToolsApiService {
       }
 
       const data: ApiResponse = await response.json();
-      console.log(data);
       // Extract base appointments from the response
       return data.data.map((appointment) => appointment);
     } catch (error) {

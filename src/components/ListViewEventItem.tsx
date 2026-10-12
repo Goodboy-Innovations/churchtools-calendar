@@ -6,6 +6,7 @@
 import React from 'react';
 import { formatTime, formatDate, isMultiDayEvent } from '../utils/date.utils';
 import { Appointment } from '../types/api.types';
+import { useI18n } from '../i18n';
 
 interface ListViewEventItemProps {
     eventData: Appointment;
@@ -24,6 +25,7 @@ export const ListViewEventItem: React.FC<ListViewEventItemProps> = ({
     setExpanded,
     disableFlags,
 }) => {
+    const t = useI18n();
     const event = eventData.base;
     const startTime = formatTime(eventData.calculated.startDate);
     const endTime = formatTime(eventData.calculated.endDate);
@@ -33,8 +35,8 @@ export const ListViewEventItem: React.FC<ListViewEventItemProps> = ({
         eventData.calculated.startDate,
         eventData.calculated.endDate
     );
-    const title = event.title || 'Tapahtuma';
-    const color = event.calendar.color || '#b4d336';
+    const title = event.title || t.event;
+    const color = event.calendar.color || 'var(--ct-accent)';
 
     // Only allow interaction if description is not disabled
     const canExpand = !disableFlags.description && (event.description || event.address || event.link);
@@ -48,9 +50,9 @@ export const ListViewEventItem: React.FC<ListViewEventItemProps> = ({
     const renderTimeDisplay = () => {
         if (event.allDay) {
             if (isMultiDay) {
-                return `Koko päivä: ${startDate} - ${endDate}`;
+                return `${t.allDay}: ${startDate} - ${endDate}`;
             }
-            return 'Koko päivä';
+            return t.allDay;
         }
 
         if (isMultiDay) {

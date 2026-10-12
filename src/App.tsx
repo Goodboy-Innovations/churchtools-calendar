@@ -10,6 +10,7 @@ import { useResponsive } from './hooks/useResponsive';
 import { MonthNavigation } from './components/MonthNavigation';
 import { CalendarGrid } from './components/CalendarGrid';
 import { EventList } from './components/EventList';
+import { useI18n } from './i18n';
 import './styles/calendar.scss';
 
 interface AppProps {
@@ -18,6 +19,7 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = ({ baseUrl, calendarId }) => {
+  const t = useI18n();
   const apiService = useMemo(() => new ChurchToolsApiService(baseUrl), [baseUrl]);
   const { currentMonth, selectedDate, goToNextMonth, goToPreviousMonth, selectDate } =
     useCalendarState();
@@ -35,7 +37,7 @@ const App: React.FC<AppProps> = ({ baseUrl, calendarId }) => {
 
         {error && (
           <div className="error-message">
-            <p>Virhe ladattaessa tapahtumia: {error}</p>
+            <p>{t.loadError(error)}</p>
           </div>
         )}
 

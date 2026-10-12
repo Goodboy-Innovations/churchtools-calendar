@@ -8,6 +8,7 @@ import { ChurchToolsApiService } from '../services/api.service';
 import { ListViewEventItem } from './ListViewEventItem';
 import { getUpcomingDateRange, getUpcomingEvents, formatListViewDate } from '../utils/date.utils';
 import { Appointment } from '../types/api.types';
+import { useI18n } from '../i18n';
 import '../styles/calendar.scss';
 
 interface ListViewAppProps {
@@ -57,6 +58,7 @@ const useListViewConfig = (): ListViewConfig => {
 };
 
 export const ListViewApp: React.FC<ListViewAppProps> = ({ baseUrl, calendarId }) => {
+  const t = useI18n();
   const apiService = useMemo(() => new ChurchToolsApiService(baseUrl), [baseUrl]);
   const config = useListViewConfig();
   const [events, setEvents] = useState<Appointment[]>([]);
@@ -119,14 +121,14 @@ export const ListViewApp: React.FC<ListViewAppProps> = ({ baseUrl, calendarId })
 
         {error && (
           <div className="error-message">
-            <p>Virhe ladattaessa tapahtumia: {error}</p>
+            <p>{t.loadError(error)}</p>
           </div>
         )}
 
         {loading && (
           <div className="loading-spinner">
             <div className="spinner"></div>
-            <p>Ladataan tapahtumia...</p>
+            <p>{t.loading}</p>
           </div>
         )}
 
@@ -134,13 +136,13 @@ export const ListViewApp: React.FC<ListViewAppProps> = ({ baseUrl, calendarId })
           <div className="listview-content">
             {groupedEvents.length === 0 ? (
               <div className="no-events">
-                <p>Ei tulevia tapahtumia seuraavan {config.days} päivän aikana.</p>
+                <p>{t.noUpcomingEvents(config.days)}</p>
               </div>
             ) : (
               groupedEvents.map((day, index) => (
                 <div key={index} className="listview-day-group">
                   <div className="listview-day-header">
-                    <h3>{formatListViewDate(day.date)}</h3>
+                    <h3>{formatListViewDate(day.date, t.locale)}</h3>
                     {/* <div className="day-event-count">{day.events.length}</div> */}
                   </div>
                   <div className="listview-events">

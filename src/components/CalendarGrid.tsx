@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import { CalendarDay } from '../types/calendar.types';
 import { generateCalendarDays, getWeekdayNames } from '../utils/date.utils';
 import { Appointment } from '../types/api.types';
+import { useI18n } from '../i18n';
 
 interface CalendarGridProps {
   currentMonth: Date;
@@ -21,8 +22,9 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
   events,
   onSelectDate,
 }) => {
+  const t = useI18n();
   const calendarDays = generateCalendarDays(currentMonth, selectedDate, events);
-  const weekdayNames = getWeekdayNames();
+  const weekdayNames = getWeekdayNames(t.locale);
 
   return (
     <div className="calendar-grid">

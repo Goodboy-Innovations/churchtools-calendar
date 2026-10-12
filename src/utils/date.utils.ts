@@ -20,7 +20,7 @@ import {
   endOfDay,
   addDays,
 } from 'date-fns';
-import { fi } from 'date-fns/locale';
+import type { Locale } from 'date-fns';
 import { CalendarDay } from '../types/calendar.types';
 import { Appointment } from '../types/api.types';
 
@@ -34,8 +34,8 @@ export const formatApiDate = (date: Date): string => {
 /**
  * Format month and year for display (e.g., "LOKAKUU 2025")
  */
-export const formatMonthYear = (date: Date): string => {
-  return format(date, 'MMMM yyyy', { locale: fi }).toUpperCase();
+export const formatMonthYear = (date: Date, locale: Locale): string => {
+  return format(date, 'MMMM yyyy', { locale }).toUpperCase();
 };
 
 /**
@@ -146,14 +146,14 @@ export const getMonthDateRange = (date: Date): { from: string; to: string } => {
 /**
  * Get weekday names for header (MA, TI, KE, TO, PE, LA, SU)
  */
-export const getWeekdayNames = (): string[] => {
+export const getWeekdayNames = (locale: Locale): string[] => {
   const date = new Date(2024, 0, 1); // Monday, Jan 1, 2024
   const weekStart = startOfWeek(date, { weekStartsOn: 1 });
   
   return eachDayOfInterval({
     start: weekStart,
     end: addMonths(weekStart, 0).setDate(weekStart.getDate() + 6) as any,
-  }).map((day) => format(day, 'EEEEEE', { locale: fi }).toUpperCase());
+  }).map((day) => format(day, 'EEEEEE', { locale }).toUpperCase());
 };
 
 /**
@@ -198,6 +198,6 @@ export const getUpcomingEvents = (events: Appointment[]) => {
 /**
  * Format date for list view header (e.g., "MA 15.1.2025")
  */
-export const formatListViewDate = (date: Date): string => {
-  return format(date, 'EEEEEE d.M.yyyy', { locale: fi }).toUpperCase();
+export const formatListViewDate = (date: Date, locale: Locale): string => {
+  return format(date, 'EEEEEE d.M.yyyy', { locale }).toUpperCase();
 };
