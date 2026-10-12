@@ -5,8 +5,6 @@ yarn.lock
 
 # Build output
 dist/
-hubspot/churchtools-calendar.module/module.js
-hubspot/churchtools-calendar.module/module.css
 *.tsbuildinfo
 
 # Environment

@@ -116,11 +116,10 @@ You can display multiple calendars on the same site by using different calendar 
 
 The same calendar runs on HubSpot as a custom module in `hubspot/churchtools-calendar.module`. The module shows the calendar view only.
 
-1. Build the module files:
+1. The built module files `module.js` (the calendar bundle) and `module.css` (styles + themes from `hubspot/themes/`) are committed, so the module folder can be used straight from git. After changing the source or a theme, rebuild and commit them:
    ```bash
    npm run build:hubspot
    ```
-   This writes `module.js` (the calendar bundle) and `module.css` (styles + themes from `hubspot/themes/`) into the module folder.
 2. Upload the module to your HubSpot theme with the [HubSpot CLI](https://developers.hubspot.com/docs/cms/developer-reference/local-development-cli):
    ```bash
    hs upload hubspot/churchtools-calendar.module <your-theme>/modules/churchtools-calendar.module
