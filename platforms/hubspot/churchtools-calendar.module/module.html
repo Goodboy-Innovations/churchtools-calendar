@@ -2,18 +2,32 @@
 {% set ct_container_id = "churchtools-calendar-" ~ name|md5 %}
 {% set ct_language = module.language if module.language != "auto" else "" %}
 
+{% if module.extra_css %}
+{# "</" is escaped so the CSS cannot close the style tag #}
+<style>{{ module.extra_css|replace("</", "<\/") }}</style>
+{% endif %}
+
+{% if not module.base_url %}
+<div class="churchtools-calendar-error">Lisää ChurchTools-osoite moduulin asetuksiin.</div>
+{% else %}
 <div id="{{ ct_container_id }}"
-     class="churchtools-calendar-container{% if module.css_class %} {{ module.css_class|escape_attr }}{% endif %}"></div>
+     class="churchtools-calendar-container{% if module.extra_class %} {{ module.extra_class|escape_attr }}{% endif %}"></div>
 
 <script>
   (function () {
+    // Language: the module setting, or the page language (<html lang>) when automatic
+    var language = {{ ct_language|tojson }} || document.documentElement.lang.slice(0, 2).toLowerCase();
+    // A language can have its own calendar; otherwise the default calendar is used
+    var calendars = { en: {{ module.calendar_id_en|tojson }} };
+    var calendarId = calendars[language] || {{ module.calendar_id|tojson }};
+
     function start() {
       window.ChurchToolsCalendar.init(
         {{ ct_container_id|tojson }},
         {{ module.base_url|tojson }},
-        {{ module.calendar_id|tojson }},
+        calendarId,
         "calendar",
-        {{ ct_language|tojson }}
+        language
       );
     }
     // module.js is loaded in the page footer, so wait for it
@@ -26,3 +40,4 @@
     }
   })();
 </script>
+{% endif %}

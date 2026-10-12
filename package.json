@@ -1,5 +1,5 @@
 {
-  "name": "churchtools-wp-calendar",
+  "name": "churchtools-calendar",
   "private": true,
   "description": "ChurchTools calendar for WordPress and HubSpot CMS",
   "type": "module",
