@@ -2,8 +2,11 @@
 {% set ct_container_id = "churchtools-calendar-" ~ name|md5 %}
 {% set ct_language = module.language if module.language != "auto" else "" %}
 
+{% if not module.base_url %}
+<div class="churchtools-calendar-error">Lisää ChurchTools-osoite moduulin asetuksiin.</div>
+{% else %}
 <div id="{{ ct_container_id }}"
-     class="churchtools-calendar-container{% if module.css_class %} {{ module.css_class|escape_attr }}{% endif %}"></div>
+     class="churchtools-calendar-container{% if module.extra_class %} {{ module.extra_class|escape_attr }}{% endif %}"></div>
 
 <script>
   (function () {
@@ -26,3 +29,4 @@
     }
   })();
 </script>
+{% endif %}

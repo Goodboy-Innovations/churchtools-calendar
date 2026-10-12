@@ -4,7 +4,7 @@
     "label": "ChurchTools-osoite",
     "help_text": "Instanssin osoite, esim. https://seurakunta.church.tools",
     "type": "text",
-    "required": true,
+    "required": false,
     "default": ""
   },
   {
@@ -38,7 +38,7 @@
     "default": "auto"
   },
   {
-    "name": "css_class",
+    "name": "extra_class",
     "label": "CSS-luokka",
     "help_text": "Lisäluokka kalenterin ympärille, esim. sivuston oman kalenteriteeman kohdistamiseen.",
     "type": "text",
