@@ -1,0 +1,63 @@
+/**
+ * Default theme of the HubSpot module, appended to module.css after the core styles.
+ *
+ * Navy text and headings, teal highlights, warm gray borders, square edges.
+ * The font is inherited from the site.
+ *
+ * Every color is a --ct-* custom property. The variables are set with low
+ * specificity (:where), so a site overrides them from its own stylesheet with
+ *
+ *   .churchtools-calendar-container .churchtools-calendar { --ct-accent: #c00; }
+ *
+ * regardless of load order. The rules below read the variables, so overriding
+ * a variable is enough to recolor them too.
+ */
+
+:where(.churchtools-calendar-container) .churchtools-calendar {
+    --ct-text: #003F5F;
+    --ct-text-muted: #8D8D94;
+    --ct-heading: #003F5F;
+    --ct-accent: #0090A9;
+    --ct-today: #0090A9;
+    --ct-selected-bg: #003F5F;
+    --ct-selected-text: #ffffff;
+    --ct-indicator: #0090A9;
+    --ct-border: #DFDBD2;
+    --ct-bg-hover: #fafafa;
+
+    font-size: 1.1rem;
+}
+
+/* Bold month heading, nav buttons in the heading color */
+.churchtools-calendar-container .churchtools-calendar .month-navigation .current-month {
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.churchtools-calendar-container .churchtools-calendar .month-navigation .nav-button {
+    border-color: var(--ct-heading);
+    color: var(--ct-heading);
+}
+
+.churchtools-calendar-container .churchtools-calendar .month-navigation .nav-button:hover {
+    background: var(--ct-heading);
+    border-color: var(--ct-heading);
+    color: var(--ct-selected-text);
+}
+
+/* Selected-day badge matches the selected day in the grid */
+.churchtools-calendar-container .churchtools-calendar .event-list .event-list-header .selected-day-badge {
+    background: var(--ct-selected-bg);
+    border-color: var(--ct-selected-bg);
+    color: var(--ct-selected-text);
+}
+
+/* Links in the accent color, underlined */
+.churchtools-calendar-container .churchtools-calendar a {
+    color: var(--ct-accent);
+    text-decoration: underline;
+}
+
+.churchtools-calendar-container .churchtools-calendar a:hover {
+    color: var(--ct-heading);
+}

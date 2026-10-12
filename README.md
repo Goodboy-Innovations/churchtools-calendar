@@ -112,7 +112,7 @@ The same calendar runs on HubSpot as a custom module in `platforms/hubspot/churc
 
 1. Get the module. Either:
    - download `churchtools-calendar-hubspot-<version>.zip` from the latest `hubspot-v*` release, or
-   - use `platforms/hubspot/churchtools-calendar.module` straight from git. The built `module.js` (the calendar bundle) and `module.css` (its styles) are committed, and their first line shows the module version.
+   - use `platforms/hubspot/churchtools-calendar.module` straight from git. The built `module.js` (the calendar bundle) and `module.css` (its styles and the default theme) are committed, and their first line shows the module version.
 2. Upload the module to your HubSpot theme with the [HubSpot CLI](https://developers.hubspot.com/docs/cms/developer-reference/local-development-cli):
    ```bash
    hs upload platforms/hubspot/churchtools-calendar.module <your-theme>/modules/churchtools-calendar.module
@@ -122,7 +122,7 @@ The same calendar runs on HubSpot as a custom module in `platforms/hubspot/churc
    - **ChurchTools-osoite**: your instance, e.g. `https://your-church.church.tools`
    - **Kalenterin ID**: a public calendar
    - **Kieli**: automatic (page language), Finnish or English
-   - **CSS-luokka** (optional): an extra class on the calendar container, for scoping a site theme (see [Styling](#styling))
+   - **CSS-luokka** (optional): an extra class on the calendar container, for styling only this calendar (see [Styling](#styling))
 
 The calendar is fetched in the visitor's browser, so the ChurchTools API must allow requests from the site's domain (CORS) and the calendar must be visible to anonymous users.
 
@@ -181,7 +181,8 @@ churchtools-calendar/
 │   │   ├── churchtools-calendar.php  # Main plugin file, shortcode
 │   │   └── admin/settings.php        # Admin settings page
 │   └── hubspot/
-│       └── churchtools-calendar.module/  # HubSpot module (module.js / module.css generated)
+│       ├── churchtools-calendar.module/  # HubSpot module (module.js / module.css generated)
+│       └── theme.css                     # Default HubSpot theme, bundled into module.css
 ├── scripts/
 │   ├── package.mjs               # Package a platform from dist/
 │   ├── release.mjs               # Bump version, build, commit, tag
@@ -245,14 +246,18 @@ Colors and fonts are CSS custom properties, so a site can theme the calendar wit
 }
 ```
 
-Put a site's theme in the site's own stylesheet, not in this repo. To keep it from affecting other calendars, or to win over the module's own styles, scope it to a class and enter that class in the HubSpot module's **CSS-luokka** field (on WordPress, wrap the shortcode in an element with the class):
+The HubSpot module ships with a default theme, `platforms/hubspot/theme.css` (navy text, teal highlights, warm gray borders, the site's own font), bundled into `module.css`. The WordPress plugin uses the defaults above.
+
+To change the look on one site, override the variables in the site's own stylesheet (on HubSpot, e.g. Settings → Content → Pages → Site header HTML). This selector wins over both the defaults and the HubSpot theme regardless of load order:
 
 ```css
-.ct-theme-my-site .churchtools-calendar {
-    --ct-font: "Site Font", sans-serif;
+.churchtools-calendar-container .churchtools-calendar {
     --ct-accent: #2563eb;
+    --ct-today: #2563eb;
 }
 ```
+
+To restyle only some calendars, put a class in the HubSpot module's **CSS-luokka** field (on WordPress, wrap the shortcode in an element with the class) and use it instead: `.my-class .churchtools-calendar { ... }`.
 
 Spacing, sizing and breakpoints are in `src/styles/calendar.scss`.
 
