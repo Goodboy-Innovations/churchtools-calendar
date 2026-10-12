@@ -40,3 +40,5 @@ coverage/
 wp-content/uploads/
 wp-content/cache/
 *.zip
+# HubSpot CLI credentials
+hubspot.config.yml
